@@ -55,6 +55,7 @@ function randomize() {
 //single array(the grid) with 20 arrays, each with 20 check boxes
 //3.2. get rid of single boxes
 function checkGrid(grid) {
+  var oldSpace = [];
   grid.forEach(function(ary) {
     ary.forEach(function(box) {
 
@@ -106,22 +107,22 @@ function checkGrid(grid) {
       }
 
       function ridSingles(){
-        if(boxConnect >= 2) {
-          box.checked = true;
-        }
-        else {
+        if(boxConnect < 2) {
           box.checked = false;
         }
       }
 
-      //****THIS IS THE PROBLEM****
+
+      //1.store old box.id in array
+      //2.uncheck old position during random space move
+      //3.check new position after random space move
+      // *******THIS IS THE PROBLEM*******
       function moveBoxes(){
         var spaces = [1, -1, 19, 20, 21, -19, -20, -21];
-        var randSpace = Math.floor(Math.random()*spaces.length);
-        //console.log(randSpace);
+        var randNewSpace = Math.floor(Math.random()*spaces.length);
         if(box.checked === true && box.id < 400 || box.id > 0){
-          box.id = parseInt(box.id)+ parseInt(spaces[randSpace]);
-          console.log(parseInt(box.id) + parseInt(spaces[randSpace]));
+          box.id = parseInt(box.id)+ parseInt(spaces[randNewSpace]);
+          //console.log(parseInt(box.id) + parseInt(spaces[randNewSpace]));
           box.id = parseInt(box.id);
         }
         else if(box.checked === true && box.id > 400 || box.id < 0){
@@ -133,17 +134,16 @@ function checkGrid(grid) {
         ridSingles();
         moveBoxes();
       }, 1000);
-
     });
-
     //console.log(ary);
   });
+
 }
+
+buildGrid();
+randomize();
 
 button.addEventListener("click", function() {
   console.log("clicked");
   checkGrid(gridScheme);
 });
-
-buildGrid();
-randomize();
