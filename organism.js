@@ -114,6 +114,7 @@ function checkGrid(grid) {
         }
       }
 
+      //****THIS IS THE PROBLEM****
       function moveBoxes(){
         var spaces = [1, -1, 19, 20, 21, -19, -20, -21];
         var randSpace = Math.floor(Math.random()*spaces.length);
