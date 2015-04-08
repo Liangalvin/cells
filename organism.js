@@ -106,18 +106,17 @@ function checkGrid(grid) {
         boxConnect+=2;
       }
 
-      function ridSingles(){
+      function ridSingles() {
         if(boxConnect < 2) {
           box.checked = false;
         }
       }
 
-
       //1.store old box.id in array
       //2.uncheck old position during random space move
-      //3.check new position after random space move
+      //3.check new position after random space move with new box.id
       // *******THIS IS THE PROBLEM*******
-      function moveBoxes(){
+      function moveBoxes() {
         var spaces = [1, -1, 19, 20, 21, -19, -20, -21];
         var randNewSpace = Math.floor(Math.random()*spaces.length);
         if(box.checked === true && box.id < 400 || box.id > 0){
@@ -130,7 +129,7 @@ function checkGrid(grid) {
         }
       }
 
-      setInterval(function(){
+      setInterval(function() {
         ridSingles();
         moveBoxes();
       }, 1000);
