@@ -4,6 +4,7 @@ var grid = [];
 var theGrid = document.querySelector("#grid");
 var button = document.querySelector("#generate");
 var arr = [];
+var newArr = [];
 //var obj;
 
 // build the grid
@@ -42,6 +43,8 @@ function randomize(){
 //check for single boxes and remove
 function updateGrid(objAry){
   var numConnect;
+  console.log("during the update");
+  console.log(newArr);
   function checkGrid(objAry){
     var x;
     var y;
@@ -170,6 +173,7 @@ function updateGrid(objAry){
 
       if((x < 19 && y < 19) && grid[obj.objx + randX][obj.objy + randY].checked === false){
         grid[obj.objx+randX][obj.objy+randY].checked = true;
+        grid[obj.objx][obj.objy].checked = false;
         console.log("original space");
         console.log(grid[obj.objx][obj.objy]);
         console.log("the new space");
@@ -182,9 +186,14 @@ function updateGrid(objAry){
     //console.log(arr);
   }
 
-  //set interval for checking
   checkGrid(arr);
   move(arr);
+  //set interval for checking
+  setInterval(function(){
+    checkGrid(newArr);
+    move(newArr);
+  }, 1000);
+
 }
 
 button.addEventListener("click", function(){
