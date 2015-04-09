@@ -36,119 +36,155 @@ function randomize(){
   }
   arr.forEach(function(obj){
     grid[obj.objx][obj.objy].checked = obj.state;
-    //console.log(obj);
   });
 }
 
 //check for single boxes and remove
 function updateGrid(objAry){
-  var x;
-  var y;
   var numConnect;
-  objAry.forEach(function(obj){
-    x = parseInt(obj.objx);
-    //console.log(x);
-    y = parseInt(obj.objy);
-    numConnect = 0;
+  function checkGrid(objAry){
+    var x;
+    var y;
+    objAry.forEach(function(obj){
+      x = parseInt(obj.objx);
+      //console.log(x);
+      y = parseInt(obj.objy);
+      numConnect = 0;
 
-    function xAnd1(xVal){
-      if(xVal+1 === 20){
-        console.log("val: " + xVal);
-        return false;
+      function xAnd1(xVal){
+        if(xVal+1 === 20){
+          console.log("val: " + xVal);
+          return false;
+        }
+        else {
+          return xVal+1;
+        }
       }
-      else {
-        return xVal+1;
-      }
-    }
 
-    function yAnd1(yVal){
-      if(yVal+1 === 20){
-        return false;
+      function yAnd1(yVal){
+        if(yVal+1 === 20){
+          return false;
+        }
+        else {
+          return yVal+1;
+        }
       }
-      else {
-        return yVal+1;
+
+      function xLess1(xVal){
+        if(xVal-1 === -1){
+          return false;
+        }
+        else {
+          return xVal-1;
+        }
       }
-    }
 
-    function xLess1(xVal){
-      if(xVal-1 === -1){
-        return false;
+      function yLess1(yVal){
+        if(yVal-1 === -1){
+          return false;
+        }
+        else {
+          return yVal-1;
+        }
       }
-      else {
-        return xVal-1;
+
+      //south
+      if(((x <= 18 && y <= 18) && grid[x][y].checked === true) && grid[xAnd1(obj.objx)][y].checked){
+        console.log("South");
+        console.log(grid[xAnd1(obj.objx)][y]);
+        numConnect+=1;
       }
-    }
-
-    function yLess1(yVal){
-      if(yVal-1 === -1){
-        return false;
+      //southEast
+      if(((x < 19 && y < 19) && grid[x][y].checked === true) && grid[xAnd1(obj.objx)][yAnd1(obj.objy)].checked === true){
+        console.log("southEast");
+        console.log(grid[xAnd1(obj.objx)][yAnd1(obj.objy)]);
+        numConnect+=1;
       }
-      else {
-        return yVal-1;
+      //southWest Airlines
+      if(((x < 19 && y > 0) && grid[x][y].checked === true) && grid[xAnd1(obj.objx)][yLess1(obj.objy)].checked === true){
+        console.log("southWest Airlines");
+        console.log(grid[xAnd1(obj.objx)][yLess1(obj.objy)]);
+        numConnect+=1;
       }
-    }
+      //east
+      if(((x > 0 && y < 19) && grid[x][y].checked === true) && grid[x][yAnd1(obj.objy)].checked === true){
+        console.log("East");
+        console.log(grid[x][yAnd1(obj.objy)]);
+        numConnect+=1;
+      }
+      //west
+      if(((x > 0 && y > 0) && grid[x][y].checked === true) && grid[x][yLess1(obj.objy)].checked === true){
+        console.log("West");
+        console.log(grid[x][yLess1(obj.objy)]);
+        numConnect+=1;
+      }
+      //north
+      if(((x > 0 && y <= 18) && grid[x][y].checked === true) && grid[xLess1(obj.objx)][y].checked === true){
+        console.log("North");
+        console.log(grid[xLess1(obj.objx)][y]);
+        numConnect+=1;
+      }
+      //northEast
+      if(((x > 0 && y <= 18) && grid[x][y].checked === true) && grid[xLess1(obj.objx)][yAnd1(obj.objy)].checked === true){
+        console.log("northEast");
+        console.log(grid[xLess1(obj.objx)][yAnd1(obj.objy)]);
+        numConnect+=1;
+      }
+      //northWest
+      if(((x >= 1 && y >= 1 ) && grid[x][y].checked === true) && grid[xLess1(obj.objx)][yLess1(obj.objy)].checked === true){
+        console.log("northWest");
+        console.log(grid[xLess1(obj.objx)][yLess1(obj.objy)]);
+        numConnect+=1;
+      }
+      console.log(numConnect);
 
-    //south
-    if(((x <= 18 && y <= 18) && grid[x][y].checked === true) && grid[xAnd1(obj.objx)][y].checked){
-      console.log("South");
-      console.log(grid[xAnd1(obj.objx)][y]);
-      numConnect++;
-    }
-    //southEast
-    if(((x <= 18 && y <= 18) && grid[x][y].checked === true) && grid[xAnd1(obj.objx)][yAnd1(obj.objy)].checked === true){
-      console.log("southEast");
-      console.log(grid[xAnd1(obj.objx)][yAnd1(obj.objy)]);
-      numConnect++;
-    }
-    //southWest Airlines
-    if(((x <= 18 && y > 0) && grid[x][y].checked === true) && grid[xAnd1(obj.objx)][yLess1(obj.objy)].checked === true){
-      console.log("southWest Airlines");
-      console.log(grid[xAnd1(obj.objx)][yLess1(obj.objy)]);
-      numConnect++;
-    }
-    //east
-    if(((x < 19 && y < 19) && grid[x][y].checked === true) && grid[x][yAnd1(obj.objy)].checked === true){
-      console.log("East");
-      console.log(grid[x][yAnd1(obj.objy)]);
-      numConnect++;
-    }
-    //west
-    if(((x > 0 && y > 0) && grid[x][y].checked === true) && grid[x][yLess1(obj.objy)].checked === true){
-      console.log("West");
-      console.log(grid[x][yLess1(obj.objy)]);
-      numConnect++;
-    }
-    //north
-    if(((x > 0 && y > 0) && grid[x][y].checked === true) && grid[xLess1(obj.objx)][y].checked === true){
-      console.log("North");
-      console.log(grid[xLess1(obj.objx)][y]);
-      numConnect++;
-    }
-    //northEest
-    if(((x > 0 && y <= 18) && grid[x][y].checked === true) && grid[xLess1(obj.objx)][yAnd1(obj.objy)].checked === true){
-      console.log("northEast");
-      console.log(grid[xLess1(obj.objx)][yAnd1(obj.objy)]);
-      numConnect++;
-    }
-    //northWest
-    if(((x >= 1 && y >= 1 ) && grid[x][y].checked === true) && grid[xLess1(obj.objx)][yLess1(obj.objy)].checked === true){
-      console.log("northWest");
-      console.log(grid[xLess1(obj.objx)][yLess1(obj.objy)]);
-      numConnect++;
-    }
-    console.log(numConnect);
+      if(numConnect < 1){
+        grid[x][y].checked = false;
+      }
+    }); //closes ary.forEach
+  }
 
-    if(numConnect < 1){
-      grid[x][y].checked = false;
-    }
+  //move each object randomly?
+  //go through the grid and check the "alive" boxes
+  //position[x][y] will be unchecked after position[x+-rand][y+-rand]
+  var move = function(ary){
+    newArr = [];
+      ary.forEach(function(obj){
+        if(grid[obj.objx][obj.objy].checked === true){
+          // console.log("grid position of index");
+          // console.log(obj);
+          newArr.push(obj);
+        }
+      });
+      //console.log(newArr);
 
-    //move each object randomly
-    var move = function(){
-      console.log(obj);
-    }
-    move();
-  }); //closes ary.forEach
+    newArr.forEach(function(obj){
+      //for each object randomly add/subtract a space to move
+      //status will then be checked
+      var x = parseInt(obj.objx);
+      var y = parseInt(obj.objy);
+      var randX = Math.floor(Math.random()*2);
+      var randY = Math.floor(Math.random()*2);
+      console.log(randX);
+      console.log(randY);
 
+      if((x < 19 && y < 19) && grid[obj.objx + randX][obj.objy + randY].checked === false){
+        grid[obj.objx+randX][obj.objy+randY].checked = true;
+        console.log("original space");
+        console.log(grid[obj.objx][obj.objy]);
+        console.log("the new space");
+        console.log(grid[obj.objx+randX][obj.objy+randY]);
+      }
+      // console.log("move index");
+      // console.log(grid[obj.objx][obj.objy]);
+
+    });
+    //console.log(arr);
+  }
+
+  //set interval for checking
+  checkGrid(arr);
+  move(arr);
 }
 
 button.addEventListener("click", function(){
