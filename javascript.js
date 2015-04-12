@@ -190,9 +190,10 @@ function updateGrid(objAry){
   move(arr);
   //set interval for checking
   setInterval(function(){
+    console.log(newArr);
     checkGrid(newArr);
     move(newArr);
-  }, 1000);
+  }, 1500);
 
 }
 
