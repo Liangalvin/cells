@@ -4,7 +4,7 @@ var grid = [];
 var theGrid = document.querySelector("#grid");
 var button = document.querySelector("#generate");
 var arr = [];
-var newArr = [];
+// var newArr = [];
 //var obj;
 
 // build the grid
@@ -22,8 +22,9 @@ function buildGrid(){
       positions.setAttribute("type", "checkbox");
 
       grid[x][y] = positions;
-
       theGrid.appendChild(positions);
+      positions.id="c"+num;                 //Gabe: added an ID to be able querySelect
+      num++;                                //This ID is just the created cell order
     }
   }
 }
@@ -42,6 +43,7 @@ function randomize(){
 
 //check for single boxes and remove
 function updateGrid(objAry){
+  var newArr;
   var numConnect;
   console.log("during the update");
   console.log(newArr);
@@ -190,15 +192,30 @@ function updateGrid(objAry){
   move(arr);
   //set interval for checking
   setInterval(function(){
-    console.log(newArr);
+    var array = [];
     checkGrid(newArr);
     move(newArr);
+
+      var grids = document.querySelectorAll('input');
+      for(i=0;i<grids.length;i++){
+          if(grids[i].checked===true){
+              var next = i+1;
+              array.push(next);
+              grids[i].checked=false;
+            }
+          }
+      for(j=0;j<array.length;j++){
+          var neighbor= document.querySelector("#c"+array[j]);
+          neighbor.checked=true;
+      }
+    console.log(newArr);
   }, 1500);
 
 }
 
+// button.addEventListener("click", setInterval(function(){
 button.addEventListener("click", function(){
-  updateGrid(arr);
+updateGrid(arr);
 });
 
 buildGrid();
